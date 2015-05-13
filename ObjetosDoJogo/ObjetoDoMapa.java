@@ -41,6 +41,7 @@ public abstract class ObjetoDoMapa {
     protected boolean superiorDireito;
     protected boolean inferiorEsquerdo;
     protected boolean inferiorDireito;
+    protected boolean inferior;
 
     // Animação
     protected Animation animation;
@@ -104,11 +105,13 @@ public abstract class ObjetoDoMapa {
             int tr = tileMap.getTileType(tileDeCima, tileDaDireita);
             int bl = tileMap.getTileType(tileDeBaixo, tileDaEsquerda);
             int br = tileMap.getTileType(tileDeBaixo, tileDaDireita);
+            int bd = tileMap.getTileType(tileDeBaixo, (int) x / tileSize);
 
             superiorEsquerdo = tl == Tile.BLOQUEADA;
             superiorDireito = tr == Tile.BLOQUEADA;
             inferiorEsquerdo = bl == Tile.BLOQUEADA;
-            inferiorDireito = br == Tile.BLOQUEADA;	
+            inferiorDireito = br == Tile.BLOQUEADA;
+            inferior = bd == Tile.BLOQUEADA;
     }
 
 
@@ -149,7 +152,7 @@ public abstract class ObjetoDoMapa {
             if(dy > 0) {
                     /* Se o objeto encontrar uma tile bloqueada abaixo dele, isso significa que
                        ele estava caido e agora atingiu o chão, ou seja, seu movimento deve ser finalizado */
-                    if(inferiorEsquerdo || inferiorDireito) {
+                    if(inferiorEsquerdo || inferiorDireito || inferior) {
                             dy = 0; // Finalizando o movimento
                             caindo = false; //O objeto não está mais caindo
                             ytemp = (linhaAtual + 1) * tileSize - cAltura / 2; //A coordenada y do objeto será setada para o fim da linha atual
@@ -204,7 +207,7 @@ public abstract class ObjetoDoMapa {
                     calculaOsCantos(x, ydest + 1);
 
                     //Se não existirem, o objeto deve começar a cair
-                    if(!inferiorEsquerdo && !inferiorDireito) 
+                    if(!inferior) 
                             caindo = true;
             }
 
