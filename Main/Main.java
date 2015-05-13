@@ -7,8 +7,8 @@ import java.awt.event.*;
 public class Main {
 
     public static void main(String[] args)  {
-
-        JFrame window = new JFrame("Jogo");
+        //Contribuindo aqui.
+        JFrame window = new JFrame("Dora a Aventureira");
         window.setContentPane(new GamePanel());
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
